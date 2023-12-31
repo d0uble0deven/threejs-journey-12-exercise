@@ -1,6 +1,10 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
+// import * as dat from 'dat.gui'
+// import typefaceFont from 'three/examples/fonts/helvetiker_regular.typeface.json'
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 
 /**
  * Base
@@ -18,6 +22,41 @@ const scene = new THREE.Scene()
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
+
+/**
+ * Fonts
+ */
+const fontLoader = new FontLoader();
+console.log(fontLoader)
+
+fontLoader.load(
+    // node_modules/three/examples/fonts/helvetiker_regular.typeface.json
+    // typefaceFont,
+    '/fonts/helvetiker_regular.typeface.json',
+    (font) => {
+        console.log('font loaded: ', font)
+        const textGeometry = new TextGeometry(
+            'hello!',
+            {
+                font: font,
+                size: 0.5,
+                height: 0.2,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelOffset: 0,
+                bevelSegments: 5
+
+            }
+        )
+        
+        console.log(textGeometry)
+        const textMaterial = new THREE.MeshBasicMaterial()
+        const text = new THREE.Mesh(textGeometry, textMaterial)
+        scene.add(text)
+    }
+)
 
 /**
  * Object
